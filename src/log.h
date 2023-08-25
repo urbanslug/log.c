@@ -24,7 +24,9 @@ extern "C"
     #include "log_conf.h"
 #endif
 
-#define LOGC_VERSION "0.1.1"
+#define LOGC_VERSION_MAJOR 0U
+#define LOGC_VERSION_MINOR 2U
+#define LOGC_VERSION_TEST  0U
 
 /// @brief Log event struct
 typedef struct
