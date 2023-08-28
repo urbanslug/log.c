@@ -59,7 +59,7 @@ My changes:
 - Renamed 'udata' variables in code to more meaningful
 - Added sample source files
     - **basic** Is a basic example, to log to stdout and to a file
-    - **Callbacks** Is a minimal example using callbacks with different log levels
+    - **callbacks** Is a minimal example using callbacks with different log levels
     - **threading** Shows a threading example
 
 

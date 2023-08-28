@@ -1,10 +1,13 @@
 /**
- * Copyright (c) 2020 rxi
- * Copyright (c) 2023 BDeliers
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the MIT license. See `log.c` for details.
- */
+* @file log.c
+* @brief Log module main header file
+*
+* SPDX-FileCopyrightText: 2020 rxd
+* SPDX-FileCopyrightText: 2023 BDeliers
+*
+* SPDX-License-Identifier: MIT
+*
+*/
 
 #ifndef LOG_H
 #define LOG_H

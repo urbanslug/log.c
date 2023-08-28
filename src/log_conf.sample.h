@@ -1,3 +1,13 @@
+/**
+* @file log.c
+* @brief Log module settings file
+*
+* SPDX-FileCopyrightText: 2023 BDeliers
+*
+* SPDX-License-Identifier: MIT
+*
+*/
+
 #ifndef LOG_CONF_H
 #define LOG_CONF_H
 
