@@ -54,7 +54,7 @@ static struct
     log_LogLevel std_level;                        /// @var Standard output log level
     bool std_quiet;                                /// @var Standard output quiet mode
     Callback callbacks[LOGC__MAX_CALLBACKS];       /// @var Log event callbacks list
-} L;
+} L = {NULL, NULL, LOGC_TRACE, false, {0}};
 
 static const char *level_strings[] = { "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE" };
 
@@ -67,7 +67,7 @@ static void stdout_callback(log_Event *ev)
 {
 #if LOGC__TIME_FORMAT == 2
     char buf[16];
-    buf[strftime(buf, sizeof(buf), "%H:%M:%S", localtime(ev->time))] = '\0';
+    buf[strftime(buf, sizeof(buf), "%H:%M:%S", localtime(&ev->time))] = '\0';
     fprintf(ev->stream, "%s ",  buf);
 #elif LOGC__TIME_FORMAT == 1
     fprintf(ev->stream, "%d ",  ev->time);
@@ -103,7 +103,7 @@ static void file_callback(log_Event *ev)
 {
 #if LOGC__TIME_FORMAT == 2
     char buf[64];
-    buf[strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", ev->time)] = '\0';
+    buf[strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", localtime(&ev->time))] = '\0';
     fprintf(ev->stream, "%s ",  buf);
 #elif LOGC__TIME_FORMAT == 1
     fprintf(ev->stream, "%d ",  ev->time);
@@ -192,7 +192,7 @@ void log_log(log_LogLevel level, const char *file, int line, const char *fmt, ..
     lock();
 
     // Log to standard output
-    if (!L.std_quiet && level >= L.std_level)
+    if (!L.std_quiet && level <= L.std_level)
     {
         init_event(&ev, LOGC__DEFAULT_STDOUT);
         va_start(ev.ap, fmt);
@@ -204,7 +204,7 @@ void log_log(log_LogLevel level, const char *file, int line, const char *fmt, ..
     for (int i = 0; i < LOGC__MAX_CALLBACKS && L.callbacks[i].fn; i++)
     {
         Callback *cb = &L.callbacks[i];
-        if (level >= cb->level)
+        if (level <= cb->level)
         {
             init_event(&ev, cb->stream);
             va_start(ev.ap, fmt);

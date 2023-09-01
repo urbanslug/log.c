@@ -24,58 +24,43 @@ Each function takes a printf format string followed by additional arguments:
 log_trace("Hello %s", "world")
 ```
 
-Resulting in a line with the given format printed to stderr:
+Resulting in a line with the given format printed to standard output:
 
 ```
 20:18:26 TRACE src/main.c:11: Hello world
 ```
 
-
-#### log_set_quiet(bool enable)
-Quiet-mode can be enabled by passing `true` to the `log_set_quiet()` function.
-While this mode is enabled the library will not output anything to `stderr`, but
-will continue to write to files and callbacks if any are set.
-
-
-#### log_set_level(int level)
-The current logging level can be set by using the `log_set_level()` function.
-All logs below the given level will not be written to `stderr`. By default the
-level is `LOG_TRACE`, such that nothing is ignored.
-
-
-#### log_add_fp(FILE *fp, int level)
-One or more file pointers where the log will be written can be provided to the
-library by using the `log_add_fp()` function. The data written to the file
-output is of the following format:
+And to the output files:
 
 ```
 2047-03-11 20:18:26 TRACE src/main.c:11: Hello world
 ```
 
-Any messages below the given `level` are ignored. If the library failed to add a
-file pointer a value less-than-zero is returned.
+**Detailed documentation is provided in the 'log.h' file**
+
+### Configure library
+To alter the default settings, the library has to be compiled with the 'LOGC__USER_SETTINGS' flag.
+This way, a 'log_conf.h' file can be specified to alter the default settings.
 
 
-#### log_add_callback(log_LogFn fn, void *udata, int level)
-One or more callback functions which are called with the log data can be
-provided to the library by using the `log_add_callback()` function. A callback
-function is passed a `log_Event` structure containing the `line` number,
-`filename`, `fmt` string, `va` printf va\_list, `level` and the given `udata`.
+## Differences with the [original project from rxi](https://github.com/rxi/log.c)
+The most interesting pull-requests (to me at least) have been integrated.
+Thanks to the following for their indirect contribution:
+- [**flemingoo**, Log levels re-ordering](https://github.com/rxi/log.c/pull/9)
+- [**dianjixz**, C++ support](https://github.com/rxi/log.c/pull/36)
+- [**chiefnoah**, Log levels renaming to avoid conflicts with Syslog](https://github.com/rxi/log.c/pull/17)
+- [**Allenhe123**, Example with threads](https://github.com/rxi/log.c/pull/27)
 
-
-#### log_set_lock(log_LockFn fn, void *udata)
-If the log will be written to from multiple threads a lock function can be set.
-The function is passed the boolean `true` if the lock should be acquired or
-`false` if the lock should be released and the given `udata` value.
-
-
-#### const char* log_level_string(int level)
-Returns the name of the given log level as a string.
-
-
-#### LOG_USE_COLOR
-If the library is compiled with `-DLOG_USE_COLOR` ANSI color escape codes will
-be used when printing.
+My changes:
+- Code indentation changed to 4 spaces
+- Added doxygen-style documentation for all functions and structures
+- Log levels enum converted to a typedef
+- Ability to configure library with the 'log_conf.h' file
+- Renamed 'udata' variables in code to more meaningful
+- Added sample source files
+    - **basic** Is a basic example, to log to stdout and to a file
+    - **Callbacks** Is a minimal example using callbacks with different log levels
+    - **threading** Shows a threading example
 
 
 ## License

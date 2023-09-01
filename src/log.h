@@ -73,19 +73,25 @@ const char *log_level_string(log_LogLevel level);
 
 
 /// @brief          Set the process lock function
+/// @remark         The lock function is passed true to acquire the resource, false to release
 /// @param fn       Function to be called to lock/unlock the log module
 /// @param lock     Mutex pointer
 void log_set_lock(log_LockFn fn, void *lock);
 
 /// @brief          Set the standard output log level
+/// @remark         Callbacks and files are not concerned by this setting
+///                 Default to LOGC_TRACE
 /// @param level    Desired log level
 void log_set_level(log_LogLevel level);
 
 /// @brief          Set the standard output to quiet mode
+/// @remark         Callbacks and files are not concerned by this setting
+///                 Default to false
 /// @param enable   True to enable quiet mode, false to disable
 void log_set_quiet(bool enable);
 
 /// @brief          Add a callback to the corresponding log events
+/// @remark         The callback function will be passed a log_Event structure when called
 /// @param fn       Callback function
 /// @param stream   Pointer to the output stream
 /// @param level    Corresponding log level
