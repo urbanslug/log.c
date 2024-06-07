@@ -28,7 +28,7 @@ extern "C"
 #endif
 
 #define LOGC_VERSION_MAJOR 0U
-#define LOGC_VERSION_MINOR 2U
+#define LOGC_VERSION_MINOR 3U
 #define LOGC_VERSION_TEST  0U
 
 /// @brief Log event struct

@@ -35,14 +35,15 @@ typedef struct
 } Callback;
 
 /// @brief Log management structure
-static struct
+struct LogManagemnt
 {
     void *lock_ptr;                                /// @var Mutex used in the lock function
     log_LockFn lock_fn;                            /// @var Lock function to be called before logging
     log_LogLevel std_level;                        /// @var Standard output log level
     bool std_quiet;                                /// @var Standard output quiet mode
     Callback callbacks[LOGC__MAX_CALLBACKS];       /// @var Log event callbacks list
-} L = {NULL, NULL, LOGC_TRACE, false, {0}};
+} LogManagemnt;
+static struct LogManagemnt L = {NULL, NULL, LOGC_TRACE, false, {0}};
 
 static const char *level_strings[] = { "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE" };
 
