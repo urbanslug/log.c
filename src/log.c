@@ -9,7 +9,7 @@
 *
 */
 
-#include "log.h"
+#include "../include/log.h"
 
 /// @brief Maximum number of possible callbacks
 #ifndef LOGC__MAX_CALLBACKS

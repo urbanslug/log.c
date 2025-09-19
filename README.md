@@ -42,6 +42,12 @@ And to the output files:
 To alter the default settings, the library has to be compiled with the 'LOGC__USER_SETTINGS' flag.
 This way, a 'log_conf.h' file can be specified to alter the default settings.
 
+#### Using CMake
+You can use the library using CMake and toggle some of the configs at compile time
+The current defaults are:
+```
+-DLOG_USE_COLOR=ON -DLOG_FILE_INFO=ON -DLOG_DEFAULT_STREAM=stderr
+````
 
 ## Differences with the [original project from rxi](https://github.com/rxi/log.c)
 The most interesting pull-requests (to me at least) have been integrated.

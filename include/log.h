@@ -24,7 +24,7 @@ extern "C"
 
 /// @remark Compile with LOGC__USER_SETTINGS defined to include log_conf.h and be able to modify the above settings
 #ifdef LOGC__USER_SETTINGS
-    #include "log_conf.h"
+    #include "../src/log_conf.h"
 #endif
 
 #define LOGC_VERSION_MAJOR 0U
@@ -49,7 +49,7 @@ typedef void (*log_LogFn)(log_Event *ev);
 
 /// @brief          Lock function type
 /// @param lock     True if the resource has to be locked, false otherwise
-/// @param lock_ptr Pointer to the mutex resource 
+/// @param lock_ptr Pointer to the mutex resource
 typedef void (*log_LockFn)(bool lock, void *lock_ptr);
 
 /// @brief  Log levels enum type
