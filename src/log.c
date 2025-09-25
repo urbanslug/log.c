@@ -67,7 +67,7 @@ static void stdout_callback(log_Event *ev)
 
 #ifdef LOGC__STDOUT_COLOR
 	fprintf(
-		ev->stream, "%s%-5s\x1b[0m ",
+		ev->stream, "%s%s\x1b[0m ",
 		level_colors[ev->level], level_strings[ev->level]);
 
 #ifndef LOGC__STDOUT_NO_FILEINFO
@@ -77,7 +77,7 @@ static void stdout_callback(log_Event *ev)
 #endif
 #else
 	fprintf(
-		ev->stream, "%-5s ",
+		ev->stream, "%s ",
 		level_strings[ev->level]);
 
 #ifndef LOGC__STDOUT_NO_FILEINFO
