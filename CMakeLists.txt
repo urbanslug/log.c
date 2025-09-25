@@ -24,24 +24,18 @@ else()
 endif()
 
 # === Platform & Toolchain Configuration ===
-
-
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # --- liteseq Library ---
-
 add_library(log
   ${SRC_DIR}/log.c
 )
 
 # C standard & basic props
 set_target_properties(log PROPERTIES
-  C_STANDARD 17
-  CXX_STANDARD 17
-  C_STANDARD_REQUIRED YES
-  CXX_STANDARD_REQUIRED YES
-  C_EXTENSIONS OFF
+  C_STANDARD 99
+  CXX_STANDARD 11
 )
 
 # Compiler options
@@ -104,7 +98,12 @@ if(LOG_USE_COLOR)
   target_compile_definitions(log PRIVATE LOG_USE_COLOR)
 endif()
 
-option(LOG_FILE_INFO "Log file path and line number" ON)
+option(LOG_FULL_FILE_NAME "Log entire file path" OFF)
+if(LOG_FULL_FILE_NAME)
+  target_compile_definitions(log PRIVATE LOG_FULL_FILE_NAME)
+endif()
+
+option(LOG_FILE_INFO "Log file and line number" ON)
 if(LOG_FILE_INFO)
   target_compile_definitions(log PRIVATE LOG_FILE_INFO)
 endif()
@@ -118,12 +117,9 @@ set_property(CACHE LOG_DEFAULT_STREAM PROPERTY STRINGS stdout stderr)
 # Expose as a macro
 target_compile_definitions(log PRIVATE LOG_DEFAULT_STREAM=${LOG_DEFAULT_STREAM})
 
-
 # Include directories for the library
 # expose the given directories to anything linking against loglib
 target_include_directories(log
   PUBLIC
   ${INCLUDE_DIR}
 )
-
-

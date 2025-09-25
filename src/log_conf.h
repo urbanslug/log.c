@@ -29,6 +29,12 @@
 #define LOGC__STDOUT_NO_FILEINFO
 #endif
 
+#ifdef LOG_FULL_FILE_NAME
+/// @brief Use full file path in logs
+///        undefine to use only the file name
+#define LOGC__FULL_FILE_NAME
+#endif
+
 /// @brief Time format used in the logs.
 ///        2 for local time string
 ///        1 for epoch
