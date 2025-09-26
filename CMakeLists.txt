@@ -75,14 +75,15 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
   add_compile_definitions(RELEASE)
 endif()
 
+message("Looking for an appropriate threading library...")
 if(APPLE)  # true for macOS/iOS simulators, etc.
-  find_library(DISPATCH_LIB NAMES dispatch)
-  if(DISPATCH_LIB)
-    message(STATUS "Using Grand Central Dispatch (GCD) for threading on Apple platforms.")
-    target_link_libraries(log PRIVATE "${DISPATCH_LIB}")
-  else()
-    message(FATAL_ERROR "Grand Central Dispatch (libdispatch) not found.")
-  endif()
+  message(STATUS "Using Grand Central Dispatch (GCD) for threading on Apple platforms.")
+
+  # Link to dispatch (GCD) and BlocksRuntime using linker flags
+  # -lBlocksRuntime is necessary for the C Blocks feature used by GCD's C API.
+  target_link_libraries(log PRIVATE dispatch "-lBlocksRuntime")
+
+  message(STATUS "GCD and BlocksRuntime linked via linker flags.")
 else()
   find_package(Threads REQUIRED)
   message(STATUS "Using pthreads for threading on non-Apple platforms.")
